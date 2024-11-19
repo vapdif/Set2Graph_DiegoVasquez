@@ -1,0 +1,16 @@
+name: jet-classification
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.8
+  - pytorch
+  - torchvision
+  - torchaudio
+  - cudatoolkit=11.1  # Cambiar a "cpuonly" si no tienes GPU
+  - numpy
+  - scikit-learn
+  - uproot
+  - pip
+  - pip:
+      - matplotlib
