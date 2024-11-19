@@ -1,13 +1,14 @@
-name: jet-classification
+name: jet-class_DV
 channels:
   - defaults
+  - pytorch
   - conda-forge
 dependencies:
-  - python=3.8
-  - pytorch
-  - torchvision
-  - torchaudio
-  - cudatoolkit=11.1  # Cambiar a "cpuonly" si no tienes GPU
+  - python=3.10
+  - pytorch=2.0.1
+  - torchvision=0.15.2
+  - torchaudio=2.0.2
+  - cudatoolkit=11.8  # Cambiar a "cpuonly" si no tienes GPU
   - numpy
   - scikit-learn
   - uproot
