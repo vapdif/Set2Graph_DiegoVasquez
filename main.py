@@ -1,7 +1,8 @@
-import argparse
-from scripts.download_data import download_data
+import argparse         # handle command line arguments.
+
 from scripts.train import train_model
 from scripts.evaluate import evaluate_model
+from scripts.download_data import download_data
 
 def main():
     parser = argparse.ArgumentParser(description="Jet Classification Pipeline")

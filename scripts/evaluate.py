@@ -1,26 +1,36 @@
-from models.set2graph_model import Set2GraphModel
-from utils.dataset import JetsDataset
-from torch.utils.data import DataLoader
+from utils.dataset import JetGraphDataset
+from torch_geometric.loader import DataLoader
 import torch
-from sklearn.metrics import f1_score, adjusted_rand_score
+import numpy as np
+
+from models.set2graph_model import Set2GraphModel
+from sklearn.metrics import f1_score
+
+DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 def evaluate_model(data_path, model_path, batch_size=64, input_dim=10, hidden_dim=128, output_dim=1):
-    test_dataset = JetsDataset(f"{data_path}/test/test_data.root")
+    # Cargar dataset de prueba
+    test_dataset = JetGraphDataset('test', data_dir=data_path)
     test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
 
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    model = Set2GraphModel(input_dim, hidden_dim, output_dim).to(device)
+    # Cargar modelo
+    model = Set2GraphModel(input_dim, hidden_dim, output_dim).to(DEVICE)
     model.load_state_dict(torch.load(model_path))
     model.eval()
 
-    all_preds, all_labels = [], []
+    # Evaluar
+    y_true, y_pred = [], []
     with torch.no_grad():
-        for tracks, labels in test_loader:
-            tracks = tracks.to(device)
-            preds = (model(tracks) > 0.5).float().cpu().numpy()
-            all_preds.append(preds)
-            all_labels.append(labels.numpy())
+        for data in test_loader:
+            data = data.to(DEVICE)
+            output = model(data.x, data.edge_index)
+            probabilities = torch.sigmoid(output)
+            predictions = (probabilities > 0.5).long()
+            #predictions = (output > 0.5).long()
+            y_true.append(data.y.cpu().numpy())
+            y_pred.append(predictions.cpu().numpy())
 
-    f1 = f1_score(all_labels, all_preds, average='weighted')
-    ari = adjusted_rand_score(all_labels.flatten(), all_preds.flatten())
-    print(f"F1 Score: {f1}, ARI: {ari}")
+    # Calcular métricas
+    f1 = f1_score(np.hstack(y_true), np.hstack(y_pred), average='weighted')
+    print(f"F1 Score: {f1}")
+

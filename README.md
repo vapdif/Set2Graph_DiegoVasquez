@@ -43,12 +43,15 @@ Download and structure the dataset automatically using the provided scripts.
 project/ 
 ├── data/                   # Dataset folder 
 ├── models/                 # Neural network models 
-│   └── set2graph_model.py 
+│   ├── __init__.py
+|   └── set2graph_model.py 
 ├── scripts/                # Pipeline scripts 
+│   ├── __init__.py
 │   ├── download_data.py    # Downloads the dataset 
 │   ├── train.py            # Trains the model 
 │   ├── evaluate.py         # Evaluates the model 
 ├── utils/                  # Utility scripts 
+│   ├── __init__.py
 │   └── dataset.py 
 ├── .gitignore              # Ignore files to avoid uploading them to the repository               
 ├── env_S2G_DV.yml          # Conda environment file 
@@ -75,10 +78,28 @@ project/
         conda env create -f env_S2G_DV.yml
 
     Activate the environment:
-        conda activate jet-classification
+        conda activate jet-class_DV
 
-    Install additional pip dependencies (if any):
-        pip install -r requirements.txt
+    Install additional pip dependencies:
+
+        for linux, CUDA 11.8, PyTorch:
+           conda install pytorch torchvision torchaudio pytorch-cuda=11.8 -c pytorch -c nvidia
+        
+        for PyTorch Geometric 2.5.1
+            pip install torch-scatter -f https://data.pyg.org/whl/torch-2.5.1+cu118.html
+            pip install torch-sparse -f https://data.pyg.org/whl/torch-2.5.1+cu118.html
+            pip install torch-cluster -f https://data.pyg.org/whl/torch-2.5.1+cu118.html
+            pip install torch-spline-conv -f https://data.pyg.org/whl/torch-2.5.1+cu118.html
+            pip install torch-geometric
+
+        Check the installation PyTorch y PyTorch Geometric 
+            python -c "import torch; import torch_geometric; print(torch.__version__, torch_geometric.__version__)"
+
+
+
+    Modification at the Terminal (Temporary)
+    Before running main.py, export the root directory to the PYTHONPATH:
+        export PYTHONPATH=$(pwd)
 
 ## Usage
 
