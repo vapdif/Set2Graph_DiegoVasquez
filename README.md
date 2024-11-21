@@ -132,8 +132,8 @@ The model is evaluated using the following metrics:
 
 The trained Set2Graph model should achieve:
 
-    F1-Score: ~0.9
-    ARI: ~0.85
+    F1-Score: ~0.77
+    Accuracy: ~0.78
 
 These results demonstrate high accuracy in classifying b, c, and light jets.
 
