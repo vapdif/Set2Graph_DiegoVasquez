@@ -56,8 +56,8 @@ project/
 ├── .gitignore              # Ignore files to avoid uploading them to the repository               
 ├── env_S2G_DV.yml          # Conda environment file 
 ├── main.py                 # Main controller script 
-├── README.md               # Documentation
-└── requirements.txt        # Pip dependencies 
+└── README.md               # Documentation
+
 
 
 
@@ -125,8 +125,7 @@ Evaluate the model using the test set:
 The model is evaluated using the following metrics:
 
     F1-Score: Combines precision and recall into a single metric.
-    Rand Index (RI): Measures similarity between predicted and actual labels.
-    Adjusted Rand Index (ARI): Adjusts RI for chance-level similarity.
+    Accuracy: Proporción de predicciones correctas sobre el total de predicciones.
 
 ## Expected Results
 
