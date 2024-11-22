@@ -96,6 +96,8 @@ project/
             python -c "import torch; import torch_geometric; print(torch.__version__, torch_geometric.__version__)"
 
 
+    install seaborn library.
+        conda install seaborn 
 
     Modification at the Terminal (Temporary)
     Before running main.py, export the root directory to the PYTHONPATH:
